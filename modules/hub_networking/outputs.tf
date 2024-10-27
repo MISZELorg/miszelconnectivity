@@ -7,3 +7,13 @@ output "nsg_ids" {
   description = "Map of NSG IDs"
   value       = { for k, v in azurerm_network_security_group.nsgs : k => v.id }
 }
+
+output "hub_vnet_name" {
+  description = "xxx"
+  value       = azurerm_virtual_network.hub_vnet.name
+}
+
+output "hub_rg_name" {
+  description = "xxx"
+  value       = azurerm_resource_group.hub_rg.name
+}

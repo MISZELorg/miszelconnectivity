@@ -30,18 +30,19 @@ resource "azurerm_subnet" "hub_subnets" {
   ]
 }
 
-# Define NSGs
+# Define NSGs, skipping for specific subnets
 resource "azurerm_network_security_group" "nsgs" {
-  for_each            = var.subnets
+  for_each            = { for k, v in var.subnets : k => v if !contains(["GatewaySubnet", "AzureFirewallSubnet", "AzureBastionSubnet"], k) }
   name                = "${each.key}-nsg"
   location            = var.location
   resource_group_name = azurerm_resource_group.hub_rg.name
   tags                = var.hub_tags
 }
 
-# Associate NSGs with Subnets
+# Associate NSGs with Subnets, skipping for specific subnets
 resource "azurerm_subnet_network_security_group_association" "nsg_associations" {
-  for_each                  = azurerm_subnet.hub_subnets
+  for_each = { for k, v in var.subnets : k => v if !contains(["GatewaySubnet", "AzureFirewallSubnet", "AzureBastionSubnet"], k) }
+
   subnet_id                 = azurerm_subnet.hub_subnets[each.key].id
   network_security_group_id = azurerm_network_security_group.nsgs[each.key].id
 }

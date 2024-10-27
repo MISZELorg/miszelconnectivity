@@ -4,9 +4,9 @@ resource "azurerm_firewall_policy" "aks" {
   name                = "aks-fwp"
   resource_group_name = var.resource_group_name
   location            = var.location
-  intrusion_detection {
-    mode = "Deny"
-  }
+  # intrusion_detection {   ## only in use when Azure Firewall SKU Premium.
+  #   mode = "Deny"
+  # }
 }
 
 # Rules Collection Group

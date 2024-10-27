@@ -65,7 +65,7 @@ module "bastion" {
 # AKS FW rules - module creates fw rules for AKS cluster.
 module "firewall_rules" {
   source              = "./modules/firewall_rules"
-  resource_group_name = module.hub_networkinghub_rg_name
+  resource_group_name = module.hub_networking.hub_rg_name
   location            = var.location
   depends_on = [
     module.hub_networking

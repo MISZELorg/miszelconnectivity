@@ -18,10 +18,10 @@ variable "hub_vnet_cidr" {
   type        = list(string)
 }
 
-variable "bastion_subnet_cidr" {
-  description = "CIDR block for the bastion subnet."
-  type        = list(string)
-}
+# variable "bastion_subnet_cidr" {
+#   description = "CIDR block for the bastion subnet."
+#   type        = list(string)
+# }
 
 # variable "firewall_subnet_cidr" {
 #   description = "CIDR block for the firewall subnet."

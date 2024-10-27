@@ -38,42 +38,6 @@ module "infra_nsg" {
   ]
 }
 
-module "bastion_nsg" {
-  source              = "./modules/nsg"
-  vnet_name           = module.hub_network.hub_vnet_name
-  subnet_name         = module.hub_network.hub_bastion_subnet_name
-  resource_group_name = module.hub_network.hub_rg_name
-  location            = var.location
-  subnet_id           = module.hub_network.hub_bastion_subnet_id
-  depends_on = [
-    module.hub_network
-  ]
-}
-
-module "firewall_nsg" {
-  source              = "./modules/nsg"
-  vnet_name           = module.hub_network.hub_vnet_name
-  subnet_name         = module.hub_network.hub_firewall_subnet_name
-  resource_group_name = module.hub_network.hub_rg_name
-  location            = var.location
-  subnet_id           = module.hub_network.hub_firewall_subnet_id
-  depends_on = [
-    module.hub_network
-  ]
-}
-
-module "gateway_nsg" {
-  source              = "./modules/nsg"
-  vnet_name           = module.hub_network.hub_vnet_name
-  subnet_name         = module.hub_network.hub_gateway_subnet_name
-  resource_group_name = module.hub_network.hub_rg_name
-  location            = var.location
-  subnet_id           = module.hub_network.hub_gateway_subnet_id
-  depends_on = [
-    module.hub_network
-  ]
-}
-
 # Bastion - module creates public IP and Bastion in dedicated Subnet.
 module "bastion" {
   source = "./modules/bastion"

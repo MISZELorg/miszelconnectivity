@@ -58,3 +58,39 @@ variable "keys" {
   description = "jumphost keys"
   type        = string
 }
+
+variable "subnets" {
+  description = "Map of subnets with names and CIDR blocks"
+  type = map(object({
+    name     = string
+    cidr     = string
+    nsg_name = string
+  }))
+  default = {
+    hub_firewall = {
+      name     = "AzureFirewallSubnet"
+      cidr     = var.firewall_subnet_cidr
+      nsg_name = "hub_firewall_nsg"
+    },
+    hub_gateway = {
+      name     = "GatewaySubnet"
+      cidr     = var.gateway_subnet_cidr
+      nsg_name = "hub_gateway_nsg"
+    },
+    hub_bastion = {
+      name     = "AzureBastionSubnet"
+      cidr     = var.bastion_subnet_cidr
+      nsg_name = "hub_bastion_nsg"
+    },
+    hub_infra = {
+      name     = "infrasubnet"
+      cidr     = var.infra_subnet_cidr
+      nsg_name = "hub_infra_nsg"
+    },
+    hub_dev = {
+      name     = "devsubnet"
+      cidr     = var.dev_subnet_cidr
+      nsg_name = "hub_dev_nsg"
+    }
+  }
+}

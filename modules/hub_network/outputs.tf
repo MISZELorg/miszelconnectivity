@@ -47,18 +47,3 @@ output "hub_dev_subnet_name" {
   description = "Name of the dev subnet."
   value       = azurerm_subnet.hub_dev.name
 }
-
-output "hub_firewall_subnet_name" {
-  description = "Name of the firewall subnet."
-  value       = azurerm_subnet.hub_firewall.name
-}
-
-output "hub_gateway_subnet_name" {
-  description = "Name of the gateway subnet."
-  value       = azurerm_subnet.hub_gateway.name
-}
-
-output "hub_bastion_subnet_name" {
-  description = "Name of the bastion subnet."
-  value       = azurerm_subnet.hub_bastion.name
-}

@@ -66,7 +66,7 @@ module "firewall_rules" {
 # Firewall - module creates public IP and Firewall in dedicated Subnet.
 module "firewall" {
   source               = "./modules/firewall"
-  resource_group_name  = module.hub_networking.hub_rg_name
+  resource_group_name  = module.hub_network.hub_rg_name
   location             = var.location
   virtual_network_name = module.hub_network.hub_vnet_name
   firewall_policy_id   = module.firewall_rules.fw_policy_id

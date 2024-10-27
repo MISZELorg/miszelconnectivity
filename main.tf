@@ -53,10 +53,10 @@ module "bastion" {
   source = "./modules/bastion"
 
   subnet_cidr          = var.bastion_subnet_cidr
-  virtual_network_name = module.hub_network.hub_vnet_name
-  resource_group_name  = module.hub_network.hub_rg_name
+  virtual_network_name = module.hub_networking.hub_vnet_name
+  resource_group_name  = module.hub_networking.hub_rg_name
   location             = var.location
-  subnet_id            = module.hub_network.hub_bastion_subnet_id
+  subnet_id            = module.hub_networking.hub_bastion_subnet_id
   depends_on = [
     module.hub_networking
   ]
@@ -65,7 +65,7 @@ module "bastion" {
 # AKS FW rules - module creates fw rules for AKS cluster.
 module "firewall_rules" {
   source              = "./modules/firewall_rules"
-  resource_group_name = module.hub_network.hub_rg_name
+  resource_group_name = module.hub_networking.hub_rg_name
   location            = var.location
   depends_on = [
     module.hub_networking
@@ -75,11 +75,11 @@ module "firewall_rules" {
 # Firewall - module creates public IP and Firewall in dedicated Subnet.
 module "firewall" {
   source               = "./modules/firewall"
-  resource_group_name  = module.hub_network.hub_rg_name
+  resource_group_name  = module.hub_networking.hub_rg_name
   location             = var.location
-  virtual_network_name = module.hub_network.hub_vnet_name
+  virtual_network_name = module.hub_networking.hub_vnet_name
   firewall_policy_id   = module.firewall_rules.fw_policy_id
-  subnet_id            = module.hub_network.hub_firewall_subnet_id
+  subnet_id            = module.hub_networking.hub_firewall_subnet_id
   depends_on = [
     module.hub_networking
   ]

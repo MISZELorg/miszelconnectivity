@@ -1,3 +1,8 @@
+output "location" {
+  description = "Hub RG location"
+  value       = azurerm_resource_group.hub_rg.location
+}
+
 output "subnet_ids" {
   description = "Map of subnet IDs"
   value       = { for k, v in azurerm_subnet.hub_subnets : k => v.id }

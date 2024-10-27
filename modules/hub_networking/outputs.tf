@@ -22,8 +22,3 @@ output "hub_rg_name" {
   description = "xxx"
   value       = azurerm_resource_group.hub_rg.name
 }
-
-# output "subnet_ids" {
-#   description = "Map of subnet IDs by subnet name."
-#   value       = { for name, subnet in azurerm_subnet.hub_subnets : name => subnet.id }
-# }

@@ -1,94 +1,53 @@
 # Hub - module creates RG, VNet and Subnets.
 
-module "hub_networking" {
-  source        = "./modules/hub_networking"
-  hub_prefix    = var.hub_prefix
-  location      = var.location
-  hub_tags      = var.hub_tags
-  hub_vnet_cidr = var.hub_vnet_cidr
-  subnets       = var.subnets
-}
-
-# module "hub_network" {
-#   source = "./modules/hub_network"
-
-#   hub_prefix           = var.hub_prefix
-#   location             = var.location
-#   hub_tags             = var.hub_tags
-#   hub_vnet_cidr        = var.hub_vnet_cidr
-#   dns_servers          = var.dns_servers
-#   firewall_subnet_cidr = var.firewall_subnet_cidr
-#   gateway_subnet_cidr  = var.gateway_subnet_cidr
-#   bastion_subnet_cidr  = var.bastion_subnet_cidr
-#   infra_subnet_cidr    = var.infra_subnet_cidr
-#   dev_subnet_cidr      = var.dev_subnet_cidr
+# module "hub_networking" {
+#   source        = "./modules/hub_networking"
+#   hub_prefix    = var.hub_prefix
+#   location      = var.location
+#   hub_tags      = var.hub_tags
+#   hub_vnet_cidr = var.hub_vnet_cidr
+#   subnets       = var.subnets
 # }
 
-# module "dev_nsg" {
-#   source              = "./modules/nsg"
+# # Bastion - module creates public IP and Bastion in dedicated Subnet.
+# module "bastion" {
+#   source = "./modules/bastion"
 
-#   vnet_name           = module.hub_network.hub_vnet_name
-#   subnet_name         = module.hub_network.hub_dev_subnet_name
-#   resource_group_name = module.hub_network.hub_rg_name
-#   location            = var.location
-#   subnet_id           = module.hub_network.hub_dev_subnet_id
+#   #   subnet_cidr          = var.bastion_subnet_cidr
+#   subnet_cidr          = var.subnets["AzureBastionSubnet"].address_prefix
+#   virtual_network_name = module.hub_networking.hub_vnet_name
+#   resource_group_name  = module.hub_networking.hub_rg_name
+#   location             = module.hub_networking.location
+#   subnet_id            = module.hub_networking.subnet_ids["AzureBastionSubnet"]
 #   depends_on = [
-#     module.hub_network
+#     module.hub_networking
 #   ]
 # }
 
-# module "infra_nsg" {
-#   source              = "./modules/nsg"
+# # AKS FW rules - module creates fw rules for AKS cluster.
+# module "firewall_rules" {
+#   source = "./modules/firewall_rules"
 
-#   vnet_name           = module.hub_network.hub_vnet_name
-#   subnet_name         = module.hub_network.hub_infra_subnet_name
-#   resource_group_name = module.hub_network.hub_rg_name
-#   location            = var.location
-#   subnet_id           = module.hub_network.hub_infra_subnet_id
+#   resource_group_name = module.hub_networking.hub_rg_name
+#   location            = module.hub_networking.location
 #   depends_on = [
-#     module.hub_network
+#     module.hub_networking
 #   ]
 # }
 
-# Bastion - module creates public IP and Bastion in dedicated Subnet.
-module "bastion" {
-  source = "./modules/bastion"
+# # Firewall - module creates public IP and Firewall in dedicated Subnet.
+# module "firewall" {
+#   source = "./modules/firewall"
 
-  #   subnet_cidr          = var.bastion_subnet_cidr
-  subnet_cidr          = var.subnets["AzureBastionSubnet"].address_prefix
-  virtual_network_name = module.hub_networking.hub_vnet_name
-  resource_group_name  = module.hub_networking.hub_rg_name
-  location             = module.hub_networking.location
-  subnet_id            = module.hub_networking.subnet_ids["AzureBastionSubnet"]
-  depends_on = [
-    module.hub_networking
-  ]
-}
-
-# AKS FW rules - module creates fw rules for AKS cluster.
-module "firewall_rules" {
-  source = "./modules/firewall_rules"
-
-  resource_group_name = module.hub_networking.hub_rg_name
-  location            = module.hub_networking.location
-  depends_on = [
-    module.hub_networking
-  ]
-}
-
-# Firewall - module creates public IP and Firewall in dedicated Subnet.
-module "firewall" {
-  source = "./modules/firewall"
-
-  resource_group_name  = module.hub_networking.hub_rg_name
-  location             = module.hub_networking.location
-  virtual_network_name = module.hub_networking.hub_vnet_name
-  firewall_policy_id   = module.firewall_rules.fw_policy_id
-  subnet_id            = module.hub_networking.subnet_ids["AzureFirewallSubnet"]
-  depends_on = [
-    module.hub_networking
-  ]
-}
+#   resource_group_name  = module.hub_networking.hub_rg_name
+#   location             = module.hub_networking.location
+#   virtual_network_name = module.hub_networking.hub_vnet_name
+#   firewall_policy_id   = module.firewall_rules.fw_policy_id
+#   subnet_id            = module.hub_networking.subnet_ids["AzureFirewallSubnet"]
+#   depends_on = [
+#     module.hub_networking
+#   ]
+# }
 
 # module "linux_vm" {
 #   source                          = "./modules/linux_vm"

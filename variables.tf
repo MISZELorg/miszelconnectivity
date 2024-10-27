@@ -18,43 +18,12 @@ variable "hub_vnet_cidr" {
   type        = list(string)
 }
 
-# variable "bastion_subnet_cidr" {
-#   description = "CIDR block for the bastion subnet."
-#   type        = list(string)
-# }
-
-# variable "firewall_subnet_cidr" {
-#   description = "CIDR block for the firewall subnet."
-#   type        = list(string)
-# }
-
-# variable "gateway_subnet_cidr" {
-#   description = "CIDR block for the gateway subnet."
-#   type        = list(string)
-# }
-
-# variable "infra_subnet_cidr" {
-#   description = "CIDR block for the infra subnet."
-#   type        = list(string)
-# }
-
-# variable "dev_subnet_cidr" {
-#   description = "CIDR block for the dev subnet."
-#   type        = list(string)
-# }
-
 variable "subnets" {
   description = "Map of subnets with their names and address prefixes"
   type = map(object({
     address_prefix = string
   }))
 }
-
-# variable "dns_servers" {
-#   description = "DNS servers for the virtual network."
-#   type        = list(string)
-#   default     = null
-# }
 
 # variable "admin_username" {
 #   description = "jumphost user"

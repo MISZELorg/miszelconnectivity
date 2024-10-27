@@ -43,18 +43,18 @@ variable "dev_subnet_cidr" {
   type        = list(string)
 }
 
-variable "dns_servers" {
-  description = "DNS servers for the virtual network."
-  type        = list(string)
-  default     = null
-}
+# variable "dns_servers" {
+#   description = "DNS servers for the virtual network."
+#   type        = list(string)
+#   default     = null
+# }
 
-variable "admin_username" {
-  description = "jumphost user"
-  type        = string
-}
+# variable "admin_username" {
+#   description = "jumphost user"
+#   type        = string
+# }
 
-variable "keys" {
-  description = "jumphost keys"
-  type        = string
-}
+# variable "keys" {
+#   description = "jumphost keys"
+#   type        = string
+# }

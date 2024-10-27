@@ -6,14 +6,7 @@ module "hub_networking" {
   location      = var.location
   hub_tags      = var.hub_tags
   hub_vnet_cidr = var.hub_vnet_cidr
-
-  subnets = {
-    "AzureFirewallSubnet" = { address_prefix = "10.0.1.0/24" }
-    "GatewaySubnet"       = { address_prefix = "10.0.2.0/24" }
-    "AzureBastionSubnet"  = { address_prefix = "10.0.3.0/24" }
-    "InfraSubnet"         = { address_prefix = "10.0.4.0/24" }
-    "DevSubnet"           = { address_prefix = "10.0.5.0/24" }
-  }
+  subnets       = var.subnets
 }
 
 

@@ -43,6 +43,13 @@ variable "dev_subnet_cidr" {
   type        = list(string)
 }
 
+variable "subnets" {
+  description = "Map of subnets with their names and address prefixes"
+  type = map(object({
+    address_prefix = string
+  }))
+}
+
 # variable "dns_servers" {
 #   description = "DNS servers for the virtual network."
 #   type        = list(string)

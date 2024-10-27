@@ -18,6 +18,11 @@ output "hub_bastion_subnet_id" {
   value       = azurerm_subnet.hub_bastion.id
 }
 
+output "hub_gateway_subnet_id" {
+  description = "ID of the gateway subnet."
+  value       = azurerm_subnet.hub_gateway.id
+}
+
 output "hub_firewall_subnet_id" {
   description = "ID of the firewall subnet."
   value       = azurerm_subnet.hub_firewall.id
@@ -53,7 +58,7 @@ output "hub_gateway_subnet_name" {
   value       = azurerm_subnet.hub_gateway.name
 }
 
-output "hub_bastion_bastion_name" {
+output "hub_bastion_subnet_name" {
   description = "Name of the bastion subnet."
   value       = azurerm_subnet.hub_bastion.name
 }

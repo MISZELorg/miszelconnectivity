@@ -13,8 +13,6 @@ variable "virtual_network_name" {
   type        = string
 }
 
-variable "subnet_cidr" {}
-
 variable "subnet_id" {
   description = "ID of the subnet for the bastion."
   type        = string

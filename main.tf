@@ -1,12 +1,12 @@
 # # Hub - module creates RG, VNet and Subnets.
-# module "hub_networking" {
-#   source        = "./modules/hub_networking"
-#   hub_prefix    = var.hub_prefix
-#   location      = var.location
-#   hub_tags      = var.hub_tags
-#   hub_vnet_cidr = var.hub_vnet_cidr
-#   subnets       = var.subnets
-# }
+module "hub_networking" {
+  source        = "./modules/hub_networking"
+  hub_prefix    = var.hub_prefix
+  location      = var.location
+  hub_tags      = var.hub_tags
+  hub_vnet_cidr = var.hub_vnet_cidr
+  subnets       = var.subnets
+}
 
 # # Bastion - module creates public IP and Bastion in dedicated Subnet.
 # module "bastion" {

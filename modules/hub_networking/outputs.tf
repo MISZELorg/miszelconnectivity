@@ -13,6 +13,11 @@ output "hub_vnet_name" {
   value       = azurerm_virtual_network.hub_vnet.name
 }
 
+output "hub_vnet_id" {
+  description = "Hub Vnet name"
+  value       = azurerm_virtual_network.hub_vnet.id
+}
+
 output "subnet_ids" {
   description = "Map of subnet IDs"
   value       = { for k, v in azurerm_subnet.hub_subnets : k => v.id }

@@ -3,7 +3,7 @@
 resource "azurerm_resource_group" "hub_rg" {
   name     = "${var.hub_prefix}-rg"
   location = var.location
-  tags     = var.hub_tags
+  tags     = var.tags
 }
 
 resource "azurerm_virtual_network" "hub_vnet" {
@@ -11,7 +11,7 @@ resource "azurerm_virtual_network" "hub_vnet" {
   resource_group_name = azurerm_resource_group.hub_rg.name
   location            = var.location
   address_space       = var.hub_vnet_cidr
-  tags                = var.hub_tags
+  tags                = var.tags
   depends_on = [
     azurerm_resource_group.hub_rg
   ]
@@ -36,10 +36,10 @@ resource "azurerm_network_security_group" "nsgs" {
   name                = "${each.key}-nsg"
   location            = var.location
   resource_group_name = azurerm_resource_group.hub_rg.name
-  tags                = var.hub_tags
+  tags                = var.tags
 }
 
-# Associate NSGs with Subnets, skipping for specific subnets
+# Associate NSGs with Subnets, skipping specific subnets
 resource "azurerm_subnet_network_security_group_association" "nsg_associations" {
   for_each = { for k, v in var.subnets : k => v if !contains(["GatewaySubnet", "AzureFirewallSubnet", "AzureBastionSubnet"], k) }
 

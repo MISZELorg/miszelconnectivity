@@ -4,6 +4,7 @@ resource "azurerm_public_ip" "firewall" {
   location            = var.location
   allocation_method   = "Static"
   sku                 = "Standard"
+  tags                = var.tags
 }
 
 resource "azurerm_firewall" "firewall" {
@@ -14,6 +15,7 @@ resource "azurerm_firewall" "firewall" {
   threat_intel_mode   = "Deny"
   sku_name            = var.sku_name
   sku_tier            = var.sku_tier
+  tags                = var.tags
   depends_on = [
     azurerm_public_ip.firewall
   ]

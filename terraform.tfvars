@@ -14,6 +14,6 @@ hub_tags = {
   Environment = "Dev"
   Owner       = "kmiszel"
   Source      = "Terraform"
-  Git         = "Github"
-  Purpose     = "Hub"
+  # Git         = "Github"
+  # Purpose     = "Hub"
 }

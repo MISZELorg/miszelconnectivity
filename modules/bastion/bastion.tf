@@ -4,12 +4,14 @@ resource "azurerm_public_ip" "bastionhost" {
   location            = var.location
   allocation_method   = "Static"
   sku                 = "Standard"
+  tags                = var.tags
 }
 
 resource "azurerm_bastion_host" "bastionhost" {
   name                = "${var.virtual_network_name}-bastion"
   resource_group_name = var.resource_group_name
   location            = var.location
+  tags                = var.tags
   depends_on = [
     azurerm_public_ip.bastionhost
   ]

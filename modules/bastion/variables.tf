@@ -13,9 +13,17 @@ variable "virtual_network_name" {
   type        = string
 }
 
-variable "subnet_cidr" {}
+variable "subnet_cidr" {
+  description = "CIDR of the subnet for the bastion."
+  type        = string
+}
 
 variable "subnet_id" {
   description = "ID of the subnet for the bastion."
   type        = string
+}
+
+variable "tags" {
+  description = "Tags to apply to the resources."
+  type        = map(string)
 }

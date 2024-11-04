@@ -1,52 +1,54 @@
-# # Hub - module creates RG, VNet and Subnets.
-# module "hub_networking" {
-#   source        = "./modules/hub_networking"
-#   hub_prefix    = var.hub_prefix
-#   location      = var.location
-#   hub_tags      = var.hub_tags
-#   hub_vnet_cidr = var.hub_vnet_cidr
-#   subnets       = var.subnets
-# }
+# Hub - module creates RG, VNet and Subnets.
+module "hub_networking" {
+  source = "./modules/hub_networking"
 
-# # Bastion - module creates public IP and Bastion in dedicated Subnet.
-# module "bastion" {
-#   source = "./modules/bastion"
+  hub_prefix    = var.hub_prefix
+  location      = var.location
+  tags          = var.hub_tags
+  hub_vnet_cidr = var.hub_vnet_cidr
+  subnets       = var.subnets
+}
 
-#   #   subnet_cidr          = var.bastion_subnet_cidr
-#   subnet_cidr          = var.subnets["AzureBastionSubnet"].address_prefix
-#   virtual_network_name = module.hub_networking.hub_vnet_name
-#   resource_group_name  = module.hub_networking.hub_rg_name
-#   location             = module.hub_networking.location
-#   subnet_id            = module.hub_networking.subnet_ids["AzureBastionSubnet"]
-#   depends_on = [
-#     module.hub_networking
-#   ]
-# }
+# Bastion - module creates public IP and Bastion in dedicated Subnet.
+module "bastion" {
+  source = "./modules/bastion"
 
-# # AKS FW rules - module creates fw rules for AKS cluster.
-# module "firewall_rules" {
-#   source = "./modules/firewall_rules"
+  subnet_cidr          = var.subnets["AzureBastionSubnet"].address_prefix
+  virtual_network_name = module.hub_networking.hub_vnet_name
+  resource_group_name  = module.hub_networking.hub_rg_name
+  location             = module.hub_networking.location
+  subnet_id            = module.hub_networking.subnet_ids["AzureBastionSubnet"]
+  tags                 = var.hub_tags
+  depends_on = [
+    module.hub_networking
+  ]
+}
 
-#   resource_group_name = module.hub_networking.hub_rg_name
-#   location            = module.hub_networking.location
-#   depends_on = [
-#     module.hub_networking
-#   ]
-# }
+# AKS FW rules - module creates fw rules for AKS cluster.
+module "firewall_rules" {
+  source = "./modules/firewall_rules"
 
-# # Firewall - module creates public IP and Firewall in dedicated Subnet.
-# module "firewall" {
-#   source = "./modules/firewall"
+  resource_group_name = module.hub_networking.hub_rg_name
+  location            = module.hub_networking.location
+  depends_on = [
+    module.hub_networking
+  ]
+}
 
-#   resource_group_name  = module.hub_networking.hub_rg_name
-#   location             = module.hub_networking.location
-#   virtual_network_name = module.hub_networking.hub_vnet_name
-#   firewall_policy_id   = module.firewall_rules.fw_policy_id
-#   subnet_id            = module.hub_networking.subnet_ids["AzureFirewallSubnet"]
-#   depends_on = [
-#     module.hub_networking
-#   ]
-# }
+# Firewall - module creates public IP and Firewall in dedicated Subnet.
+module "firewall" {
+  source = "./modules/firewall"
+
+  resource_group_name  = module.hub_networking.hub_rg_name
+  location             = module.hub_networking.location
+  virtual_network_name = module.hub_networking.hub_vnet_name
+  firewall_policy_id   = module.firewall_rules.fw_policy_id
+  subnet_id            = module.hub_networking.subnet_ids["AzureFirewallSubnet"]
+  tags                 = var.hub_tags
+  depends_on = [
+    module.hub_networking
+  ]
+}
 
 # # Jumphost - module creates Linux VM in dedicated Subnet.
 # module "linux_vm" {
@@ -61,6 +63,7 @@
 #   vm_size                         = "Standard_D2s_v3"
 #   disable_password_authentication = false
 #   enable_accelerated_networking   = true
+#   tags      = var.hub_tags
 #   depends_on = [
 #     module.hub_network
 #   ]

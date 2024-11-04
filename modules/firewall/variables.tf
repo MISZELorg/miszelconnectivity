@@ -34,3 +34,8 @@ variable "subnet_id" {
   description = "ID of the subnet for the firewall."
   type        = string
 }
+
+variable "tags" {
+  description = "Tags to apply to the resources."
+  type        = map(string)
+}

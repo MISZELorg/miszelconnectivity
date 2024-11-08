@@ -57,7 +57,7 @@ module "linux_vm" {
   server_name                     = "jumphost"
   resource_group_name             = module.hub_networking.hub_rg_name
   location                        = module.hub_networking.location
-  vnet_subnet_id                  = module.hub_networking.hub_dev_subnet_id
+  vnet_subnet_id                  = module.hub_networking.subnet_ids["DevSubnet"]
   admin_username                  = var.admin_username
   admin_password                  = var.keys
   vm_size                         = "Standard_D2s_v3"

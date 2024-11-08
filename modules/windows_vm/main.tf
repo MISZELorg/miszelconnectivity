@@ -12,15 +12,14 @@ resource "azurerm_network_interface" "compute" {
   }
 }
 
-resource "azurerm_linux_virtual_machine" "compute" {
-  name                            = var.server_name
-  location                        = var.location
-  resource_group_name             = var.resource_group_name
-  size                            = var.vm_size
-  admin_username                  = var.admin_username
-  admin_password                  = var.admin_password
-  disable_password_authentication = var.disable_password_authentication
-  tags                            = var.tags
+resource "azurerm_windows_virtual_machine" "compute" {
+  name                = var.server_name
+  location            = var.location
+  resource_group_name = var.resource_group_name
+  size                = var.vm_size
+  admin_username      = var.admin_username
+  admin_password      = var.admin_password
+  tags                = var.tags
 
   network_interface_ids = [
     azurerm_network_interface.compute.id
@@ -32,10 +31,10 @@ resource "azurerm_linux_virtual_machine" "compute" {
   }
 
   source_image_reference {
-    publisher = var.os_publisher
-    offer     = var.os_offer
-    sku       = var.os_sku
-    version   = var.os_version
+    publisher = "MicrosoftWindowsServer"
+    offer     = "WindowsServer"
+    sku       = "2019-Datacenter"
+    version   = "latest"
   }
 
   boot_diagnostics {

@@ -25,12 +25,12 @@ variable "subnets" {
   }))
 }
 
-# variable "admin_username" {
-#   description = "jumphost user"
-#   type        = string
-# }
+variable "admin_username" {
+  description = "jumphost user"
+  type        = string
+}
 
-# variable "keys" {
-#   description = "jumphost keys"
-#   type        = string
-# }
+variable "keys" {
+  description = "jumphost keys"
+  type        = string
+}

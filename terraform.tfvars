@@ -17,3 +17,6 @@ hub_tags = {
   # Git         = "Github"
   # Purpose     = "Hub"
 }
+
+admin_username = "kmiszel"
+keys           = "TempPWD2137"

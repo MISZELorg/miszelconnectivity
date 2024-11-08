@@ -69,6 +69,23 @@ module "linux_vm" {
   ]
 }
 
+module "windows_vm" {
+  source = "./modules/windows_vm"
+
+  server_name         = "winhost"
+  resource_group_name = module.hub_networking.hub_rg_name
+  location            = module.hub_networking.location
+  vnet_subnet_id      = module.hub_networking.subnet_ids["DevSubnet"]
+  admin_username      = var.admin_username
+  admin_password      = var.keys
+  vm_size             = "Standard_D2s_v3"
+  tags                = var.hub_tags
+  depends_on = [
+    module.hub_networking
+  ]
+}
+
+
 # # module "network_watcher" {
 # #   source                        = "./network_watcher"
 

@@ -65,7 +65,7 @@ module "linux_vm" {
   enable_accelerated_networking   = true
   tags                            = var.hub_tags
   depends_on = [
-    module.hub_network
+    module.hub_networking
   ]
 }
 
